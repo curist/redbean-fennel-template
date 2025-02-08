@@ -1,5 +1,7 @@
 (local hup (require :hup))
 
+; (SetHeader :Content-Type "text/html; charset=utf-8")
+
 (-> (hup [:div "<script>alert('hi!!')</script>"]) Write)
 (-> (hup [:div "hello world!!"]) Write)
 (-> (hup
