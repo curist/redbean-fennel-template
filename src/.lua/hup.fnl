@@ -23,6 +23,13 @@
 
 (local M {})
 
+(fn sanitize [s]
+  (-> (s:gsub "&" "&amp;")
+      (: :gsub "\"" "&quot;")
+      (: :gsub "'" "&#39;")
+      (: :gsub "<" "&lt;")
+      (: :gsub ">" "&gt;")))
+
 (fn stringify [tag attrs children]
   (let [attrs (or attrs {})
         children (or children [])]
@@ -32,7 +39,9 @@
           (table.concat
             (icollect [_ child (ipairs children)]
               (if (not= :table (type child))
-                (tostring child)
+                (if (= :string (type child))
+                  (sanitize child)
+                  (tostring child))
                 (M.hup child)))
             " ")
           (close tag)))))

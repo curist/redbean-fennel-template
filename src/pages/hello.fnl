@@ -1,5 +1,6 @@
 (local hup (require :hup))
 
+(-> (hup [:div "<script>alert('hi!!')</script>"]) Write)
 (-> (hup [:div "hello world!!"]) Write)
 (-> (hup
       [:svg {:width 500 :height 100}
