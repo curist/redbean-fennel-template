@@ -4,6 +4,8 @@ fennel.install()
 fennel.path = fennel.path .. ";/zip/.lua/?.fnl"
 fennel.path = fennel.path .. ";/zip/.lua/?/init.fnl"
 
+HidePath("/usr/share")
+
 function string:endswith(suffix)
   return self:sub(-#suffix) == suffix
 end
