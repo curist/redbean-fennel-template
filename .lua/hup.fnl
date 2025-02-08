@@ -30,10 +30,12 @@
     (if (. self-closing-tags tag)
       (string.format "<%s%s />" tag (stringify-attrs attrs))
       (.. (open tag attrs)
-          (accumulate [result "" _ child (ipairs children)]
-            (if (not= :table (type child))
-              (.. result (tostring child) " ")
-              (.. result (M.hup child))))
+          (table.concat
+            (icollect [_ child (ipairs children)]
+              (if (not= :table (type child))
+                (tostring child)
+                (M.hup child)))
+            " ")
           (close tag)))))
 
 (fn M.hup [markup]
