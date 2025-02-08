@@ -11,10 +11,8 @@ end
 function OnHttpRequest()
   local path = GetPath()
   if path:endswith(".fnl") then
-    local module = string.gsub(path, "/", "")
-    fennel.dofile("/zip/" .. module)
+    fennel.dofile("/zip/" .. path:sub(1))
   else
-    Write(path)
     Route()
   end
 end
