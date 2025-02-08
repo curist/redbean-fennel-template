@@ -17,14 +17,13 @@
     (.. s " " attr "=\"" (tostring value) "\"")))
 
 (fn open [tag attrs]
-  (let [attrs (or attrs {})]
-    (string.format "<%s%s>" tag (stringify-attrs attrs))))
+  (string.format "<%s%s>" tag (stringify-attrs attrs)))
 
 (fn close [tag] (string.format "</%s>" tag))
 
 (local M {})
 
-(fn M.stringify [tag attrs children]
+(fn stringify [tag attrs children]
   (let [attrs (or attrs {})
         children (or children [])]
     (if (. self-closing-tags tag)
@@ -54,6 +53,6 @@
               (set attr attr-or-child)
               (set children rest-children))
             (set children attr-or-children))))
-    (M.stringify tag attr children)))
+    (stringify tag attr children)))
 
 M.hup
