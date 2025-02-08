@@ -9,9 +9,11 @@ function string:endswith(suffix)
 end
 
 function OnHttpRequest()
-  local path = GetPath()
-  if path:endswith(".fnl") then
-    fennel.dofile("/zip/" .. path:sub(1))
+  local p = GetPath()
+  if p:endswith(".fnl") then
+    fennel.dofile("/zip" .. p)
+  elseif p:endswith("/") and path.exists("/zip" .. p .. "index.fnl") then
+    fennel.dofile("/zip" .. p .. "index.fnl")
   else
     Route()
   end
