@@ -1,5 +1,10 @@
 require("fennel-install")
 
+local hup = require("hup")
+local SakuraCSS = hup(require("SakuraCSS")())
+local NavBar = hup(require("NavBar")())
+local HeaderTemplate = SakuraCSS .. NavBar
+
 HidePath("/usr/share")
 
 function string:endswith(suffix)
@@ -7,9 +12,8 @@ function string:endswith(suffix)
 end
 
 local function renderPage(pages)
-  local hup = require("hup")
   local Page = pages[GetMethod()] or require("NotFoundPage")
-  Write(hup(require("SakuraCSS")()))
+  Write(HeaderTemplate)
   Write(hup(Page()))
 end
 
@@ -22,6 +26,9 @@ function OnHttpRequest()
     local pages = require(p .. "index")
     renderPage(pages)
   else
+    if p == "/" then
+      Write(HeaderTemplate)
+    end
     Route()
   end
 end

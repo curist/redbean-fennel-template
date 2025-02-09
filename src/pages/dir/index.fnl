@@ -21,6 +21,7 @@
                 (Row {: name : kind : ino}))]
     [:fragment
      [:style "a { text-decoration: underline; }"]
+     [:h4 "dir info"]
      [:table
       [:thead [:th :name] [:th :kind] [:th :ino]]
       [:tbody (table.unpack tbody)]]]))
