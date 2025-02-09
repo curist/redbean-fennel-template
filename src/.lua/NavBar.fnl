@@ -1,12 +1,21 @@
+(local links
+  [["/" "Home"]
+   ["/pages/hello.fnl" "Hello"]
+   ["/pages/form.fnl" "Simple Form"]
+   ["/pages/dir/" "Explore Dir"]])
+
 (fn NavBar []
-  [:fragment
-   [:style
-    (.. "nav.menu ul { padding: 0; }"
-        "nav.menu li { display: inline-block; margin-right: 15px; }"
-        "nav.menu a { text-decoration: none; }")]
-   [:nav {:class :menu}
-    [:ul
-     [:li [:a {:href "/"} "Home"]]
-     [:li [:a {:href "/pages/hello.fnl"} "Hello"]]
-     [:li [:a {:href "/pages/form.fnl"} "Simple Form"]]
-     [:li [:a {:href "/pages/dir"} "Explore Dir"]]]]])
+  (let [path (GetPath)
+        Links (icollect [_ [href name] (ipairs links)]
+                (let [class (if (= path href) :active)]
+                  [:li {: class}
+                   [:a {: href} name]]))]
+    [:fragment
+     [:style
+      (.. "nav.menu ul { padding: 0; }"
+          "nav.menu li { display: inline-block; padding: 0 15px; }"
+          "nav.menu li.active { border-bottom: 3px solid; border-color: #1d7484; }"
+          "nav.menu a { text-decoration: none; }")]
+     ;; TODO: handle active route?
+     [:nav {:class :menu}
+      [:ul (table.unpack Links)]]]))
