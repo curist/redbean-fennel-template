@@ -20,11 +20,19 @@ end
 function OnHttpRequest()
   local p = GetPath()
   if p:endswith(".fnl") then
-    local pages = require(p:gsub(".fnl$", ""))
-    renderPage(pages)
+    local found, pages = pcall(require, p:gsub(".fnl$", ""))
+    if found then
+      renderPage(pages)
+    else
+      Route()
+    end
   elseif p:endswith("/") and path.exists("/zip" .. p .. "index.fnl") then
-    local pages = require(p .. "index")
-    renderPage(pages)
+    local found, pages = pcall(require, p .. "index")
+    if found then
+      renderPage(pages)
+    else
+      Route()
+    end
   else
     if p == "/" then
       Write(SakuraCSS)
