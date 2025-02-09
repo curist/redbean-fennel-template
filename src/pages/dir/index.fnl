@@ -1,12 +1,28 @@
+(fn resolve-path [base name]
+  (case name
+    :. base
+    :.. (path.dirname base)
+    _ (path.join base name)))
+
+(fn Row [{: name : kind : ino}]
+  (let [basepath (path.join (unix.getcwd) (GetParam :path))
+        target-path (resolve-path basepath name)]
+    [:tr
+     [:td (if (= 4 kind)
+            [:a {:href (.. "?path=" target-path)} name]
+            name)]
+     [:td kind]
+     [:td ino]]))
+
 (fn Page []
   ;; https://redbean.dev/#unix.opendir
-  (let [tbody (icollect [name kind ino off (unix.opendir ".")]
-                [:tr [:td name] [:td kind] [:td ino] [:td off]])]
-    [:table
-     [:thead [:th :name] [:th :kind] [:th :ino] [:th :off]]
-     [:tbody (table.unpack tbody)]]))
+  (let [path (or (GetParam :path) ".")
+        tbody (icollect [name kind ino (unix.opendir path)]
+                (Row {: name : kind : ino}))]
+    [:fragment
+     [:style "a { text-decoration: underline; }"]
+     [:table
+      [:thead [:th :name] [:th :kind] [:th :ino]]
+      [:tbody (table.unpack tbody)]]]))
 
 {:GET Page}
-
-
-
