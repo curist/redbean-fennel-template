@@ -17,9 +17,14 @@
     (.. s " " attr "=\"" (tostring value) "\"")))
 
 (fn open [tag attrs]
-  (string.format "<%s%s>" tag (stringify-attrs attrs)))
+  (if (= tag :fragment)
+    ""
+    (string.format "<%s%s>" tag (stringify-attrs attrs))))
 
-(fn close [tag] (string.format "</%s>" tag))
+(fn close [tag]
+  (if (= tag :fragment)
+    ""
+    (string.format "</%s>" tag)))
 
 (local M {})
 

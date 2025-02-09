@@ -14,8 +14,10 @@
      [:thead [:th :name] [:th :kind] [:th :ino] [:th :off]]
      [:tbody (table.unpack tbody)]]))
 
-(-> (hup (Sakura)) Write)
-(-> (hup (InfoPage)) Write)
+(-> [:fragment
+     (Sakura)
+     (InfoPage)]
+    hup Write)
 
 
 
