@@ -1,17 +1,16 @@
-(local hup (require :hup))
+(local Pages {})
 
-(fn GetPage []
+(fn Pages.GET []
   [:fragment
    [:div "shutdown?"]
    [:form {:method :post}
     [:button "yes"]]])
 
-(fn PostPage []
+(fn Pages.POST []
   (unix.kill (unix.getppid) 15)
   [:fragment
    [:div "shutting down server"]
    [:div "bye"]])
 
-(let [page (if (= :POST (GetMethod)) PostPage GetPage)]
-  (-> (page) hup Write))
+Pages
 

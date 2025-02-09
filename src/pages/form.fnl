@@ -1,5 +1,3 @@
-(local hup (require :hup))
-
 (local Pages {})
 
 (fn Pages.GET []
@@ -17,9 +15,5 @@
    [:div "posted params:"]
    [:div (EncodeLua (GetParams))]])
 
-(fn NotFound []
-  [:fragment
-   [:h2 "404 not found"]])
-
-(-> ((or (. Pages (GetMethod)) NotFound)) hup Write)
+Pages
 
