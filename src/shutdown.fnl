@@ -3,7 +3,7 @@
 (fn GetPage []
   [:fragment
    [:div "shutdown?"]
-   [:form {:action "/shutdown.fnl" :method :post}
+   [:form {:method :post}
     [:button "yes"]]])
 
 (fn PostPage []
