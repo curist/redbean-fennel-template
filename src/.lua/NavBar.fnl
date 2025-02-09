@@ -2,7 +2,8 @@
   [["/" "Home"]
    ["/pages/hello.fnl" "Hello"]
    ["/pages/form.fnl" "Simple Form"]
-   ["/pages/dir/" "Explore Dir"]])
+   ["/pages/dir/" "Explore Dir"]
+   ["/shutdown.fnl" "Shutdown"]])
 
 (fn NavBar []
   (let [path (GetPath)
@@ -12,10 +13,9 @@
                    [:a {: href} name]]))]
     [:fragment
      [:style
-      (.. "nav.menu ul { padding: 0; }"
+      (.. "nav.menu ul { padding: 0; margin-left: -15px; }"
           "nav.menu li { display: inline-block; padding: 0 15px; }"
           "nav.menu li.active { border-bottom: 3px solid; border-color: #1d7484; }"
           "nav.menu a { text-decoration: none; }")]
-     ;; TODO: handle active route?
      [:nav {:class :menu}
       [:ul (table.unpack Links)]]]))

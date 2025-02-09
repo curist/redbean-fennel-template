@@ -2,7 +2,7 @@
 
 (fn Pages.GET []
   [:fragment
-   [:div "shutdown?"]
+   [:div "shutdown server?"]
    [:form {:method :post}
     [:button "yes"]]])
 
