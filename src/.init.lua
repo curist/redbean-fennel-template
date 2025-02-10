@@ -1,13 +1,14 @@
 require("fennel-install")
 
 local hup = require("hup")
-local SakuraCSS = hup(require("SakuraCSS")())
-local NavBar = require("NavBar")
+local SakuraCSS = hup(require("components/SakuraCSS")())
+local NavBar = require("components/NavBar")
+local NotFoundPage = require("components/NotFoundPage")
 
 HidePath("/usr/share")
 
 local function renderPage(pages)
-  local Page = pages[GetMethod()] or require("NotFoundPage")
+  local Page = pages[GetMethod()] or NotFoundPage
   Write(hup(Page()))
 end
 
