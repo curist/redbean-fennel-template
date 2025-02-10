@@ -69,6 +69,15 @@
               (set attr attr-or-child)
               (set children rest-children))
             (set children attr-or-children))))
-    (stringify tag attr children)))
+    ;; extract id & classes from tag
+    (case (tag:match "#%w+")
+      m (tset attr :id (m:sub 2)))
+    (each [m (tag:gmatch "%.%w+")]
+      (tset attr :class
+            (.. (case (. attr :class)
+                  class (.. class " ")
+                  _ "")
+                (m:sub 2))))
+    (stringify (or (tag:match "^%w+") :div) attr children)))
 
 M.hup
