@@ -1,6 +1,5 @@
 (fn resolve-path [base name]
   (case name
-    :. base
     :.. (path.dirname base)
     _ (path.join base name)))
 
@@ -18,12 +17,13 @@
   ;; https://redbean.dev/#unix.opendir
   (let [path (or (GetParam :path) ".")
         tbody (icollect [name kind ino (unix.opendir path)]
-                (Row {: name : kind : ino}))]
+                (Row {: name : kind : ino}))
+        tbody (doto tbody (tset 1 :fragment))]
     [:fragment
      [:style "a { text-decoration: underline; }"]
      [:h4 "dir info"]
      [:table
       [:thead [:th :name] [:th :kind] [:th :ino]]
-      [:tbody (table.unpack tbody)]]]))
+      [:tbody tbody]]]))
 
 {:GET Page}
