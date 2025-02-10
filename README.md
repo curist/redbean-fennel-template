@@ -17,7 +17,7 @@ You may also want to check [our hiccup implementation](src/.fnl/hup.fnl).
 ## Installation
 
 ```sh
-https://github.com/curist/redbean-fennel-template.git
+git clone https://github.com/curist/redbean-fennel-template.git
 cd redbean-fennel-template
 make run
 ```
