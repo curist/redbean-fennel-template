@@ -1,8 +1,12 @@
-(local self-closing-tags
-  {:area true :base true :br true :col true :command true
-   :embed true :hr true :img true :input true :keygen true
-   :link true :menuitem true :meta true :param true
-   :source true :track true :wbr true})
+(local M {})
+
+(var self-closing-tags
+  [:area :base :br :col :command :embed :hr :img :input
+   :keygen :link :menuitem :meta :param :source :track :wbr])
+
+(set self-closing-tags
+     (collect [_ t (ipairs self-closing-tags)]
+       (values t true)))
 
 (fn array? [t]
   (and (> (length t) 0)
@@ -25,8 +29,6 @@
   (if (= tag :fragment)
     ""
     (string.format "</%s>" tag)))
-
-(local M {})
 
 (local sanitize
   (or _G.EscapeHtml
