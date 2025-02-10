@@ -1,7 +1,7 @@
 require("fennel-install")
 
 local hup = require("hup")
-local SakuraCSS = hup(require("components/SakuraCSS")())
+local Header = hup(require("components/Header")())
 local NavBar = require("components/NavBar")
 local NotFoundPage = require("components/NotFoundPage")
 
@@ -21,7 +21,7 @@ function OnHttpRequest()
     found, pages = pcall(require, p .. "index")
   end
 
-  Write(SakuraCSS)
+  Write(Header)
   Write(hup(NavBar()))
 
   if found then
