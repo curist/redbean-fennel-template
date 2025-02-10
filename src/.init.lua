@@ -8,32 +8,24 @@ HidePath("/usr/share")
 
 local function renderPage(pages)
   local Page = pages[GetMethod()] or require("NotFoundPage")
-  Write(SakuraCSS)
-  Write(hup(NavBar()))
   Write(hup(Page()))
 end
 
 function OnHttpRequest()
   local p = GetPath()
+  local found, pages
   if p:match(".fnl$") then
-    local found, pages = pcall(require, p:gsub(".fnl$", ""))
-    if found then
-      renderPage(pages)
-    else
-      Route()
-    end
-  elseif p:match("/$") and path.exists("/zip" .. p .. "index.fnl") then
-    local found, pages = pcall(require, p .. "index")
-    if found then
-      renderPage(pages)
-    else
-      Route()
-    end
+    found, pages = pcall(require, p:gsub(".fnl$", ""))
+  elseif p:match("/$") then
+    found, pages = pcall(require, p .. "index")
+  end
+
+  Write(SakuraCSS)
+  Write(hup(NavBar()))
+
+  if found then
+    renderPage(pages)
   else
-    if p == "/" then
-      Write(SakuraCSS)
-      Write(hup(NavBar()))
-    end
     Route()
   end
 end
